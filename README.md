@@ -21,7 +21,11 @@ Analisa o HTML renderizado e sobrepõe ícones na interface. Não altera o códi
 
 **Diferencial:**
 Melhor ferramenta para análise visual rápida e compreensão da estrutura da página.
-    
+
+**Browsers suportados:**
+- Google Chrome
+- Mozilla Firefox
+
 #### axe DevTools
 **Resumo:**
 Focada em desenvolvedores, ideal para testes durante o desenvolvimento.
@@ -36,7 +40,12 @@ Usa o motor do axe-core para rodar testes automatizados baseados nas WCAG dentro
 - Problemas de navegação por teclado 
 **Diferencial:**
 Uma das mais completas para integração com código e testes automatizados.
-    
+
+**Browsers suportados:**
+- Google Chrome
+- Mozilla Firefox
+- Microsoft Edge
+
 #### Access Monitor
 **Resumo:**
 Validador baseado nas diretrizes WCAG.
@@ -52,7 +61,14 @@ Analisa páginas via URL e atribui uma pontuação de acessibilidade.
 
 **Diferencial:**
 Fornece pontuação e classificação, útil para relatórios acadêmicos.
-    
+
+**Browsers suportados:**
+Funciona via navegador (web), compatível com qualquer browser moderno como:
+- Google Chrome
+- Mozilla Firefox
+- Microsoft Edge
+- Safari
+
 #### Sa11y
 **Resumo:**
 Ferramenta simples para criadores de conteúdo.
@@ -68,6 +84,9 @@ Interface amigável que analisa páginas e dá feedback em linguagem simples.
 
 **Diferencial:**
 Melhor para não desenvolvedores (UX, conteúdo).
+
+**Browsers suportados:**
+Não é extensão tradicional, funciona dentro de sites/CMS (independente do browser)
     
 ### Ferramentas Online e Plataformas
 #### DYNO Mapper
@@ -84,6 +103,9 @@ Faz crawling do site e gera relatórios completos.
 
 **Diferencial:**
 Ideal para sites grandes.
+
+**Browsers suportados:**
+Funciona em qualquer navegador moderno 
     
 #### AudioEye
 **Resumo:**
@@ -99,11 +121,14 @@ Combina análise automática com revisão humana.
 
 **Diferencial:**
 Inclui IA + suporte humano, algo que outras não têm.
+
+**Browsers suportados:**
+Compatível com qualquer navegador moderno 
     
 #### Total Validator
 **Resumo:**
 Valida HTML + acessibilidade.
-Como funciona:
+**Como funciona:**
 Executa validações técnicas e acessibilidade juntas.
 
 **O que detecta:**
@@ -113,7 +138,10 @@ Executa validações técnicas e acessibilidade juntas.
 
 **Diferencial:**
 Combina validação técnica + acessibilidade.
-    
+
+**Browsers suportados:**
+Aplicação desktop + navegador, geralmente usado com Google Chrome 
+      
 #### AMAWeb
 
 **Resumo:**
@@ -128,6 +156,9 @@ Audita e acompanha evolução da acessibilidade.
 
 **Diferencial:**
 Foco em gestão contínua de acessibilidade.
+
+**Browsers suportados:**
+Compatível com qualquer navegador moderno 
     
 #### Google Lighthouse
 **Resumo:**
@@ -144,7 +175,10 @@ Executa testes automatizados e gera score.
 
 **Diferencial:**
 Fácil de usar e integrado ao Chrome, mas menos profundo que axe.
-    
+
+**Browsers suportados:**
+Integrado ao Google Chrome (DevTools), também via CLI
+
 ### Leitores de Tela (Testes Manuais)
 #### JAWS
 **Resumo:**
@@ -160,7 +194,13 @@ Lê o conteúdo da tela e permite navegação por teclado.
 
 **Diferencial:**
 Muito usado no mercado → padrão real de usuários.
-    
+
+**Browsers suportados:**
+Funciona melhor com:
+- Google Chrome
+- Mozilla Firefox
+- Microsoft Edge
+  
 #### NVDA
 **Resumo:**
 Leitor gratuito e open source.
@@ -175,7 +215,12 @@ Interpreta o DOM e lê via sintetizador de voz.
 
 **Diferencial:**
 Melhor opção gratuita para testes reais.
-    
+
+**Browsers suportados:**
+- Google Chrome
+- Mozilla Firefox (melhor suporte)
+- Microsoft Edge
+
 #### VoiceOver
 **Resumo:**
 Leitor nativo Apple.
@@ -189,7 +234,11 @@ Baseado em gestos (mobile) e teclado (desktop).
 
 **Diferencial:**
 Essencial para testes mobile (iPhone).
-    
+
+**Browsers suportados:**
+- Safari (melhor experiência)
+- Google Chrome
+
 ### Automação e Frameworks
 #### Robot Framework
 **Resumo:**
@@ -204,7 +253,10 @@ Integra ferramentas como axe para testes automatizados.
 
 **Diferencial:**
 Ideal para testes contínuos (CI/CD).
-    
+
+**Browsers suportados:**
+Independente de browser (depende das ferramentas integradas, como Selenium)
+
 #### A11Watch
 **Resumo:**
 Monitoramento contínuo.
@@ -219,14 +271,17 @@ Executa auditorias automáticas ao longo do tempo.
 **Diferencial:**
 Foco em monitoramento contínuo, não só testes pontuais.
 
+**Browsers suportados:**
+Compatível com qualquer navegador moderno
+
 ### Conclusão
 Nenhuma ferramenta sozinha garante acessibilidade completa.
 Ferramentas automáticas, como axe DevTools e Lighthouse, identificam erros técnicos rapidamente, mas não conseguem avaliar totalmente a experiência real do usuário.
 
 Já leitores de tela, como NVDA e JAWS, permitem identificar problemas reais de navegação e usabilidade, sendo essenciais para testes mais completos.
 
-## Infográfico da pesquisa realizada:
-![infográfico](./imagens/Infografico-ferramentas.png)
+## Infográfico da pesquisa realizada
+![infográfico com ferramentas de acessibilidade apresentadas na pesquisa](./imagens/Infografico-ferramentas.png)
 
 ## Como isso afeta o nosso trabalho como desenvolvedores
  O que a turma deveria fazer diferente depois de ler esta pesquisa?
