@@ -372,7 +372,7 @@ Testar e desenvolver pensando em usuários que não utilizam mouse.
  Exemplo: 
 
 ```html
-<button id="menuBtn">Abrir menu</button>
+<button id="menuBtn" aria-expanded="false" aria-controls="menu">Abrir menu</button>
 <nav id="menu" hidden>
   <a href="#">Início</a>
   <a href="#">Perfil</a>
@@ -415,7 +415,7 @@ ARIA (Accessible Rich Internet Applications)
 Exemplo:
 
 ```html
-<button aria-expanded="false" aria-controls="faq1" onclick="toggleFaq()">
+<button aria-expanded="false" aria-controls="faq1" onclick="toggleFaq(this)">
   Ver resposta
 </button>
 
@@ -424,9 +424,8 @@ Exemplo:
 </div>
 ```
 ```javascript
-function toggleFaq() {
-  const btn = document.querySelector("button");
-  const conteudo = document.getElementById("faq1");
+function toggleFaq(btn) {
+  const conteudo = document.getElementById(btn.getAttribute("aria-controls"));
 
   const aberto = btn.getAttribute("aria-expanded") === "true";
 
@@ -436,7 +435,7 @@ function toggleFaq() {
 ```
 Isso é importante pois os leitores de tela conseguem entender se um elemento está aberto/fechado.
 
-#### Testar menualmente 
+#### 4. Testar manualmente
 Não confiar apenas em ferramentas automáticas.
 
 Práticas simples:
