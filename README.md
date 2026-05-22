@@ -1,8 +1,10 @@
 ## Sobre esta pesquisa
- Uma frase descrevendo a dimensão e a pergunta central investigada.
+  Análise de como desenvolvedores descobrem e avaliam erros de acessibilidade em suas aplicações web.
 ## O que descobrimos (Principais Achados)
- 3 a 5 bullet points com as descobertas mais relevantes.
- Cada bullet deve ter uma fonte citada.
+ - Apesar de representar uma grande parcela da sociedade (7% da brasileira, ou seja, cerca de 15 milhões de pessoas), poucas aplicações se preocupam com essa parte da população.
+ - Durante a prototipação de um site, deve-se levar em consideração fazer testes de usabilidade com usuários com algum grau de dificuldade física, visual ou intelectual. O que significa ter cuidado na escolha das fontes, usar cores com contraste entre si, entre outros.
+ - Durante o desenvolvimento do site, deve-se usar `alt` nas imagens, que é um atributo onde descreve-se o que a imagem mostra, não coloque nas imagens que estão apenas para estilização do site para que o leitor de tela não fique lendo informações não tão importantes para a meta que o fez acessar o app.
+ - Além dos testes "manuais" com usuário, existem ferramentas automatizadas para realizar testes de acessibilidade que simulam um usuário deficiente, como o Wave, PageSpeed, e o WebPageTest.
 
 ## Ferramentas
 
@@ -12,7 +14,7 @@
 **Data de coleta:** 19–20 de abril de 2026  
 **Ferramentas utilizadas:** PageSpeed Insights (Google) e WebPageTest (Catchpoint)
  
-> 📁 Na pasta `imagens/` estão as fotos dos testes realizados.
+> 📁 Na pasta `evidencias/` estão os prints dos testes realizados.
  
 ---
  
@@ -27,11 +29,11 @@ O PageSpeed Insights avalia acessibilidade em uma escala de 0 a 100. Veja os res
 | Desktop | 88 / 100 | Aceitável, mas abaixo do ideal (meta: acima de 90) |
 | Mobile | 77 / 100 | Problemático — barreiras reais para usuários com deficiência |
  
-O score mobile de **77/100** é o mais preocupante. Para um aplicativo financeiro com milhões de usuários, esse nível de acessibilidade indica que parte significativa dos usuários com deficiência encontra dificuldades no celular — justamente o dispositivo mais usado para acessar o PicPay.
+O score mobile de **77/100** é o mais preocupante. Para um aplicativo financeiro com milhões de usuários, esse nível de acessibilidade indica que parte significativa dos usuários com deficiência encontra dificuldades no celular, justamente o dispositivo mais usado para acessar o PicPay.
  
 ### 1.2 WebPageTest (Catchpoint)
  
-O WebPageTest, executado em **iPhone 15 com Chrome v145**, identificou **5 problemas de acessibilidade, sendo 2 classificados como críticos**. O relatório os aponta na categoria *"Is It Usable?"*, com status *"Not Bad"* — indicando que o site funciona, mas com ressalvas importantes.
+O WebPageTest, executado em **iPhone 15 com Chrome v145**, identificou **5 problemas de acessibilidade, sendo 2 classificados como críticos**. O relatório os aponta na categoria *"Is It Usable?"*, com status *"Not Bad"*, fato que indica que o site funciona, mas com ressalvas importantes.
  
 ---
  
@@ -56,7 +58,7 @@ O WebPageTest identificou que o HTML da página é gerado após a entrega — ou
 - Em conexões lentas, o usuário com deficiência fica sem conteúdo por mais tempo
 ---
  
-## 3. Problemas Mais Graves e Por Quê
+## 3. Problemas mais graves e o por quê
  
 | # | Problema | Nível | Por que é grave |
 |---|---|---|---|
@@ -345,10 +347,118 @@ Já leitores de tela, como NVDA e JAWS, permitem identificar problemas reais de 
 ![infográfico com ferramentas de acessibilidade apresentadas na pesquisa](./imagens/Infografico-ferramentas.png)
 
 ## Como isso afeta o nosso trabalho como desenvolvedores
- O que a turma deveria fazer diferente depois de ler esta pesquisa?
- Pelo menos 3 práticas concretas, com exemplos de código se possível.
+Após a pesquisa, a turma deve mudar a forma de desenvolver: acessibilidade não é um ajuste final, mas parte do processo desde o início. Abaixo estão práticas essenciais que devem ser adotadas.
+
+ #### 1. Usar HTML semântico (evitar “gambiarras” com `<div>`)
+
+ Antes (errado):
+
+ `<div onclick="comprar()">Comprar</div>`
+
+ Depois (certo):
+
+ `<button onclick="comprar()">Comprar</button>`
+
+ Explicação:
+ O `<button>`:
+ - É conhecido por leitores de tela
+ - Funciona automaticamente com teclado (Enter/Espaço)
+ 
+ A `<div>` não possui esses comportamentos por padrão.
+
+
+ #### 2. Garantir a navegação por teclado
+ 
+Testar e desenvolver pensando em usuários que não utilizam mouse.
+
+ Exemplo: 
+
+```html
+<button id="menuBtn" aria-expanded="false" aria-controls="menu">Abrir menu</button>
+<nav id="menu" hidden>
+  <a href="#">Início</a>
+  <a href="#">Perfil</a>
+</nav>
+```
+```javascript
+const btn = document.getElementById("menuBtn");
+const menu = document.getElementById("menu");
+
+btn.addEventListener("click", () => {
+  const fechado = menu.hasAttribute("hidden");
+  
+  if (fechado) {
+    menu.removeAttribute("hidden");
+    btn.setAttribute("aria-expanded", "true");
+    menu.querySelector("a").focus();
+  } else {
+    menu.setAttribute("hidden", "");
+    btn.setAttribute("aria-expanded", "false");
+    btn.focus();
+  }
+});
+```
+
+O que mudou:
+- Uso de aria-expanded (É um atributo ARIA que indica se um elemento está aberto ou fechado)
+- Controle de foco com `.focus()` (Um método do JavaScript que coloca o foco em um elemento)
+- Interface funcional sem mouse
+ 
+#### 3. Adicionar atributos de acessibilidade (ARIA)
+
+ARIA (Accessible Rich Internet Applications)
+
+É um conjunto de atributos que melhoram a acessibilidade de elementos na web.
+
+- Fornece informações extras para tecnologias assistivas (como leitores de tela)
+- Não muda o visual, mas muda como o conteúdo é interpretado
+
+
+Exemplo:
+
+```html
+<button aria-expanded="false" aria-controls="faq1" onclick="toggleFaq(this)">
+  Ver resposta
+</button>
+
+<div id="faq1" hidden>
+  Esta é a resposta da pergunta.
+</div>
+```
+```javascript
+function toggleFaq(btn) {
+  const conteudo = document.getElementById(btn.getAttribute("aria-controls"));
+
+  const aberto = btn.getAttribute("aria-expanded") === "true";
+
+  btn.setAttribute("aria-expanded", !aberto);
+  conteudo.hidden = aberto;
+}
+```
+Isso é importante pois os leitores de tela conseguem entender se um elemento está aberto/fechado.
+
+#### 4. Testar manualmente
+Não confiar apenas em ferramentas automáticas.
+
+Práticas simples:
+- Navegar usando apenas Tab, Enter e Shift + Tab
+- Verificar se todas as funções são acessíveis
+- Testar com leitor de tela (ex: NVDA)
+
+#### Depois da pesquisa, a turma deve:
+- parar de pensar só no visual e focar no significado do código
+- Garantir que tudo funcione sem mouse
+- Incluir acessibilidade no processo desde o início
+
 ## Referências
  Todas as fontes no formato: Autor/Organização. Título. Ano. URL.
  Mínimo: 5 fontes. Pelo menos 1 acadêmica ou    
  *Fonte dos dados:*
-  PageSpeed Insights (Google) e WebPageTest (Catchpoint) | Coleta: 19–20 de abril de 2026
+  - PageSpeed Insights (Google). https://pagespeed.web.dev/ | Coleta: 19–20 de abril de 2026
+  - WebPageTest (Catchpoint). https://www.webpagetest.org/ | Coleta: 19–20 de abril de 2026
+  - Karen Shinoda. Alura. Acessibilidade digital: 7 dicas para conteúdos acessíveis. 2022. https://www.alura.com.br/artigos/acessibilidade-digital-criar-conteudos-acessiveis-aprenda-7-dicas | Acesso em 20 de abril de 2026
+  - Chrome. Introdução ao Lighthouse. https://developer.chrome.com/docs/lighthouse/overview | Acesso em 16 de abril de 2026
+  - Governo do Estado do Mato Grosso do Sul. Manual de acessibilidade digital. 2024. https://www.segov.ms.gov.br/wp-content/uploads/2025/02/Manual-de-Acessibilidade-Digital.pdf | Acesso em 22 de abril de 2026
+  - Acessibility. https://developer.mozilla.org/en-US/docs/Web/Accessibility | Acesso em 19 de abril de 2026
+  - Luís Victor. ACESSIBILIDADE DIGITAL E TECNOLOGIAS ASSISTIVAS PARA INCLUSÃO SOCIAL NO AMBIENTE MOBILE:A ACESSIBILIDADE DIGITAL COMO INSTRUMENTO DE INCLUSÃO SOCIAL E CIDADANIA NO CONTEXTO MOBILE. 2026. https://reer.emnuvens.com.br/reer/article/view/903/540 | Acesso em 23 de abril de 2026
+  - Natalia Nakano. Acessibilidade Web no Ensino a Distância na Ciência da Informação: uma revisão sistemática da literatura brasileira na Brapci. https://revistas.ufpr.br/atoz/article/view/81992/46480 | Acesso em 20 de abril de 2026
